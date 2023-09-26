@@ -20,13 +20,17 @@
 # include <limits.h>
 # include <unistd.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
 char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strchr(const char *string, int searchedChar );
+char	*ft_strchr(const char *s, int c );
 
 void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t elementCount, size_t elementSize);
+void	ft_realloc(size_t count, size_t size, void *pointer);
 
-size_t	ft_strlen(const char *theString);
+size_t	ft_strlen(const char *str);
 
 #endif
