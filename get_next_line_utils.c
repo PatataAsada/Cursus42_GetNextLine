@@ -18,7 +18,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
-	ft_realloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char), tmp);
+	if (!s1 || !s2)
+		return (NULL);
+	tmp = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
 	if (!tmp)
 		return (NULL);
 	i = 0;
@@ -63,14 +65,15 @@ void	ft_bzero(void *pointer, size_t n)
 	}
 }
 
-void	ft_realloc(size_t count, size_t size, void *pointer)
+void	*ft_calloc(size_t count, size_t size)
 {
-	if (pointer)
-		free(pointer);
+	void	*pointer;
+
 	pointer = malloc(count * size);
 	if (!pointer)
 		return (NULL);
 	ft_bzero (pointer, count * size);
+	return (pointer);
 }
 
 size_t	ft_strlen(const char *str)
