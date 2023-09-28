@@ -12,48 +12,6 @@
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*tmp;
-	int		i;
-	int		j;
-
-	if (!s1 || !s2)
-		return (NULL);
-	tmp = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
-	if (!tmp)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i])
-	{
-		tmp[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		tmp[i++] = s2[j++];
-	}
-	tmp[i] = '\0';
-	return (tmp);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	const char	*position;
-
-	position = s;
-	while (*position != '\0')
-	{
-		if (*position == (char) c)
-			return ((char *) position);
-		position++;
-	}
-	if (*position == (char) c)
-		return ((char *) position);
-	return (NULL);
-}
-
 void	ft_bzero(void *pointer, size_t n)
 {
 	unsigned char	*pointer_pointer;
@@ -84,4 +42,30 @@ size_t	ft_strlen(const char *str)
 	while (str[length] != '\0')
 		length++;
 	return (length);
+}
+
+char	*ft_substr(const char *s, unsigned int start, size_t len)
+{
+	char		*tmp;
+	int			i;
+
+	i = 0;
+	if (start >= ft_strlen(s) || len == 0)
+	{
+		tmp = ft_calloc(1, sizeof(char));
+		return (tmp);
+	}
+	if (len >= ft_strlen(s) - start)
+		tmp = ft_calloc(ft_strlen(s) + 1 - start, sizeof(char));
+	else
+		tmp = ft_calloc(len + 1, sizeof(char));
+	if (!tmp)
+		return (NULL);
+	while (len-- > 0 && s[start + i] != '\0')
+	{
+		tmp[i] = s[start + i];
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
 }
