@@ -56,6 +56,7 @@ char	*read_file(int fd, char *result)
 		if (read_count == -1)
 		{
 			free(tmp);
+			free(result);
 			return (NULL);
 		}
 		tmp[read_count] = 0;
@@ -111,7 +112,9 @@ char	*ft_next(char *old_buffer)
 		free(old_buffer);
 		return (NULL);
 	}
-	tmp = ft_substr(old_buffer, i + 1, BUFFER_SIZE);
+	if (old_buffer[i] == '\n')
+		i++;
+	tmp = ft_substr(old_buffer, i, BUFFER_SIZE);
 	free(old_buffer);
 	return (tmp);
 }
