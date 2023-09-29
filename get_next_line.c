@@ -36,14 +36,23 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = read_file(fd, buffer);
-	line = ft_line(buffer);
-	if (!line)
-		free(line);
-	buffer = ft_next(buffer);
-	return (line);
+	if (ft_strlen(buffer) > 0)
+	{
+		line = ft_line(buffer);
+		if (!line)
+		{
+			free(line);
+			line = NULL;
+		}
+		buffer = ft_next(buffer);
+		return (line);
+	}
+	free(buffer);
+	buffer = NULL;
+	return (NULL);
 }
 
-char	*read_file(int fd, char *result)
+char	*read_file(int fd, char *buffer)
 {
 	int		read_count;
 	char	*tmp;
@@ -52,25 +61,24 @@ char	*read_file(int fd, char *result)
 	if (!tmp)
 		return (NULL);
 	read_count = 1;
-	while (read_count > 0 && ft_strchr(result, '\n') == NULL)
+	while (read_count > 0 && ft_strchr(buffer, '\n') == NULL)
 	{
 		read_count = read(fd, tmp, BUFFER_SIZE);
 		if (read_count == -1)
 		{
 			free(tmp);
-			free(result);
+			free(buffer);
 			return (NULL);
 		}
-		tmp[read_count] = 0;
-		result = ft_free(result, tmp);
+		tmp[read_count] = '\0';
+		buffer = ft_free(buffer, tmp);
 	}
 	free(tmp);
-	return (result);
+	return (buffer);
 }
 
 char	*ft_line(char *buffer)
 {
-	char		*result;
 	long		i;
 
 	if (!buffer)
@@ -80,7 +88,7 @@ char	*ft_line(char *buffer)
 		i++;
 	if (buffer[i] == '\n')
 		i++;
-	return (result = ft_substr(buffer, 0, i));
+	return (ft_substr(buffer, 0, i));
 }
 
 char	*ft_free(char *old_buffer, char *append)
@@ -88,6 +96,8 @@ char	*ft_free(char *old_buffer, char *append)
 	char	*temp;
 
 	temp = ft_strjoin(old_buffer, append);
+	if (!temp)
+		free(temp);
 	if (old_buffer)
 		free(old_buffer);
 	return (temp);
@@ -110,5 +120,6 @@ char	*ft_next(char *old_buffer)
 	}
 	tmp = ft_substr(old_buffer, i + 1, BUFFER_SIZE);
 	free(old_buffer);
+	old_buffer = NULL;
 	return (tmp);
 }
