@@ -37,6 +37,8 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buffer = read_file(fd, buffer);
 	line = ft_line(buffer);
+	if (!line)
+		free(line);
 	buffer = ft_next(buffer);
 	return (line);
 }
@@ -78,13 +80,7 @@ char	*ft_line(char *buffer)
 		i++;
 	if (buffer[i] == '\n')
 		i++;
-	result = ft_substr(buffer, 0, i);
-	if (!result)
-	{
-		free(result);
-		return (NULL);
-	}
-	return (result);
+	return (result = ft_substr(buffer, 0, i));
 }
 
 char	*ft_free(char *old_buffer, char *append)
@@ -107,14 +103,12 @@ char	*ft_next(char *old_buffer)
 	i = 0;
 	while (old_buffer[i] && old_buffer[i] != '\n')
 		i++;
-	if (!old_buffer[i])
+	if (!old_buffer[i] || !old_buffer[i + 1])
 	{
 		free(old_buffer);
 		return (NULL);
 	}
-	if (old_buffer[i] == '\n')
-		i++;
-	tmp = ft_substr(old_buffer, i, BUFFER_SIZE);
+	tmp = ft_substr(old_buffer, i + 1, BUFFER_SIZE);
 	free(old_buffer);
 	return (tmp);
 }

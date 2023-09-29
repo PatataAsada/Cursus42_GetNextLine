@@ -35,6 +35,8 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	int			i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	if (start >= ft_strlen(s) || len == 0)
 	{
 		tmp = malloc(1 * sizeof(char));
