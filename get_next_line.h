@@ -26,9 +26,8 @@
 
 char	*get_next_line(int fd);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
-
-void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t count, size_t size);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strchr(const char *string, int searchedChar );
 
 size_t	ft_strlen(const char *str);
 

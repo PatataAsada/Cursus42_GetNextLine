@@ -12,34 +12,19 @@
 
 #include "get_next_line.h"
 
-void	ft_bzero(void *pointer, size_t n)
-{
-	unsigned char	*pointer_pointer;
-
-	pointer_pointer = pointer;
-	while (n-- > 0)
-	{
-		*(pointer_pointer++) = '\0';
-	}
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*pointer;
-
-	pointer = malloc(count * size);
-	if (!pointer)
-		return (NULL);
-	ft_bzero (pointer, count * size);
-	return (pointer);
-}
+char	*ft_strchr(const char *string, int searchedChar );
+char	*ft_substr(const char *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *str);
 
 size_t	ft_strlen(const char *str)
 {
 	int	length;
 
+	if (!str)
+		return (0);
 	length = 0;
-	while (str[length] != '\0')
+	while (str[length])
 		length++;
 	return (length);
 }
@@ -52,13 +37,13 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	i = 0;
 	if (start >= ft_strlen(s) || len == 0)
 	{
-		tmp = ft_calloc(1, sizeof(char));
+		tmp = malloc(1 * sizeof(char));
 		return (tmp);
 	}
 	if (len >= ft_strlen(s) - start)
-		tmp = ft_calloc(ft_strlen(s) + 1 - start, sizeof(char));
+		tmp = malloc((ft_strlen(s) + 1 - start) * sizeof(char));
 	else
-		tmp = ft_calloc(len + 1, sizeof(char));
+		tmp = malloc((len + 1) * sizeof(char));
 	if (!tmp)
 		return (NULL);
 	while (len-- > 0 && s[start + i] != '\0')
@@ -68,4 +53,44 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	}
 	tmp[i] = '\0';
 	return (tmp);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		sizetotal;
+	char	*res;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	sizetotal = ft_strlen(s1) + ft_strlen(s2);
+	if ((!s1 && !s2) || !sizetotal)
+		return (NULL);
+	res = malloc(sizeof(char) * (sizetotal + 1));
+	if (!res)
+		return (NULL);
+	while (s1 && s1[i])
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	while (s2 && s2[j])
+		res[i++] = s2[j++];
+	res[sizetotal] = 0;
+	return (res);
+}
+
+char	*ft_strchr(const char *string, int searchedChar )
+{
+	char	*str;
+
+	str = (char *)string;
+	if (!string)
+		return (NULL);
+	while (*str != searchedChar && *str != 0)
+		str++;
+	if (*str == searchedChar)
+		return (str);
+	return (NULL);
 }
