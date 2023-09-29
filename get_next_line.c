@@ -71,7 +71,7 @@ char	*ft_line(char *buffer)
 	long		i;
 
 	if (!buffer)
-		return (NULL);
+		return (0);
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
