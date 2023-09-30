@@ -12,9 +12,15 @@
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *string, int searchedChar );
+/*Searchs in given string for the first aparition
+of searched_char*/
+char	*ft_strchr(const char *string, int searched_char );
+/*Returns the substring of the given string at the given 
+start position with the given length*/
 char	*ft_substr(const char *s, unsigned int start, size_t len);
+/*Returns a string where it appends s2 to the end of s1*/
 char	*ft_strjoin(char const *s1, char const *s2);
+/*PP measure tape*/
 size_t	ft_strlen(const char *str);
 
 size_t	ft_strlen(const char *str)
@@ -66,7 +72,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	j = 0;
 	sizetotal = ft_strlen(s1) + ft_strlen(s2);
-	if ((!s1 && !s2) || !sizetotal)
+	if (!sizetotal)
 		return (NULL);
 	res = malloc(sizeof(char) * (sizetotal + 1));
 	if (!res)
