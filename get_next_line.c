@@ -12,22 +12,42 @@
 
 #include "get_next_line.h"
 
-/*Reads the BUFFER_SIZE bytes into a buffer
-NULL if end of file or error*/
+/**
+ * @brief	Reads BUFFER_SIZE bytes of file
+ * 			until it reaches a new line.
+ * @return	Buffer with the N bytes read.
+ * @param	int	fd : file descriptor.
+ * @param	char	*res: buffer to
+*/
 char	*read_file(int fd, char *res);
-/*Used in ft_read_file.
-Appends next BUFFER_SIZE bytes read to buffer.
-Clears old buffer and returns a new one.*/
+/**
+ * @brief	Creates a string of the old buffer and the
+ * 			string to append, and clears the old buffer.
+ * @return	New String resulting of joining old_buffer and append
+ * @param	char	*old_buffer : the starting string.
+ * @param	char	*append : the string to join.
+ */
 char	*ft_free(char *old_buffer, char *append);
-/*Removes the first line in buffer
-Frees the buffer if it's the last line*/
+/**
+ * @brief	Deletes the n charachters in string until 
+ * 			it reaches new line or end of string.
+ * @return	New String with N chars removed.
+ * 			NULL if it can't find new line.
+ * @param	char	*old_buffer : the buffer to modify.
+ */
 char	*ft_next(char *old_buffer);
-/*Returns the next line in buffer
-Empties the buffer when it gives the last line
-NULL if empty buffer*/
+/**
+* @brief	Gives the first line in given buffer.
+* @return	The first String from Buffer.
+* @param	char	*buffer : A String that may contain new lines.
+*/
 char	*ft_line(char *buffer);
 
-/*Gets the next line to read in a file.*/
+/**
+ * @brief	Reads a line from a file descriptor and returns it as a string.
+ * @return	A pointer to the string containing the line read from the file.
+ * @param	int		fd : The file descriptor to read from.
+ */
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
@@ -62,7 +82,8 @@ char	*read_file(int fd, char *buffer)
 		if (read_count == -1)
 		{
 			free(tmp);
-			free(buffer);
+			if (buffer)
+				free(buffer);
 			return (NULL);
 		}
 		tmp[read_count] = '\0';
@@ -89,6 +110,8 @@ char	*ft_free(char *old_buffer, char *append)
 {
 	char	*temp;
 
+	if (!old_buffer && !append)
+		return (NULL);
 	temp = ft_strjoin(old_buffer, append);
 	if (!temp)
 		free(temp);
