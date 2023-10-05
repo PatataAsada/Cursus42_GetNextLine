@@ -15,7 +15,8 @@
 /**
  * @brief	Reads BUFFER_SIZE bytes of file
  * 			until it reaches a new line.
- * @return	Buffer with the N bytes read.
+ * @return	Buffer with the bytes read from file.
+ * 			NULL if EOF or Error.
  * @param	int	fd : file descriptor.
  * @param	char	*res: buffer to
 */
@@ -62,8 +63,6 @@ char	*get_next_line(int fd)
 	if (!line)
 		free(line);
 	buffer = ft_next(buffer);
-	if (!buffer)
-		free(buffer);
 	return (line);
 }
 
@@ -86,6 +85,8 @@ char	*read_file(int fd, char *buffer)
 				free(buffer);
 			return (NULL);
 		}
+		if (!tmp)
+			break ;
 		tmp[read_count] = '\0';
 		buffer = ft_free(buffer, tmp);
 	}
@@ -95,15 +96,19 @@ char	*read_file(int fd, char *buffer)
 
 char	*ft_line(char *buffer)
 {
-	long		i;
+	long	i;
+	char	*tmp;
 
 	if (!buffer)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (buffer[i])
 		if (buffer[i++] == '\n')
 			break ;
-	return (ft_substr(buffer, 0, i));
+	tmp = ft_substr(buffer, 0, i);
+	if (!tmp)
+		free(tmp);
+	return (tmp);
 }
 
 char	*ft_free(char *old_buffer, char *append)
@@ -124,17 +129,19 @@ char	*ft_next(char *old_buffer)
 	char	*tmp;
 	int		i;
 
+	i = 0;
 	if (!old_buffer)
 		return (NULL);
-	i = 0;
 	while (old_buffer[i] && old_buffer[i] != '\n')
 		i++;
-	if (!old_buffer[i] || !old_buffer[i + 1])
+	if (old_buffer[i] == '\n')
+		i++;
+	if (!old_buffer[i])
 	{
 		free(old_buffer);
 		return (NULL);
 	}
-	tmp = ft_substr(old_buffer, i + 1, BUFFER_SIZE);
+	tmp = ft_substr(old_buffer, i, ft_strlen(old_buffer));
 	free(old_buffer);
 	if (!tmp)
 		return (NULL);

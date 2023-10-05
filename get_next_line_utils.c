@@ -13,41 +13,11 @@
 #include "get_next_line.h"
 
 /**
- * @brief	Searchs in given string for the first aparition
- * 			of searched_char.
- * @return	Pointer of string from first aparition of seached_char
- * 			in string given.
- * 			NULL if any error or not found.
- * @param	char	*string : where we will search.
- * @param	int		searched_char : the char we are searching for.
- */
-char	*ft_strchr(const char *string, int searched_char );
-/**
- * @brief	Given a string, it takes len characters from the position
- * 			given.
- * @return	A substring of the given string with the parameters given.
- * 			NULL if any error.
- * @param	char	*s : The original string to work.
- * @param	int		start : The position where to start the substring.
- * @param	size_t	len : The desired length of the substring.
- */
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-/**
- * @brief	Appends two strings together.
- * @return	String resulted from joining the 2 given strings.
- * 			NULL if error.
- * @param	char	*s1 : the first string.
- * @param	char	*s2 : the string to join to s1.
- */
-char	*ft_strjoin(char const *s1, char const *s2);
-/**
  * @brief	The length of given string.
  * @return	The length of the string.
  * 			NULL if error.
  * @param	char	*str : the string to measure.
  */
-size_t	ft_strlen(const char *str);
-
 size_t	ft_strlen(const char *str)
 {
 	int	length;
@@ -60,6 +30,15 @@ size_t	ft_strlen(const char *str)
 	return (length);
 }
 
+/**
+ * @brief	Given a string, it takes len characters from the position
+ * 			given.
+ * @return	A substring of the given string with the parameters given.
+ * 			NULL if any error.
+ * @param	char	*s : The original string to work.
+ * @param	int		start : The position where to start the substring.
+ * @param	size_t	len : The desired length of the substring.
+ */
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
 	char		*tmp;
@@ -87,6 +66,13 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	return (tmp);
 }
 
+/**
+ * @brief	Appends two strings together.
+ * @return	String resulted from joining the 2 given strings.
+ * 			NULL if error.
+ * @param	char	*s1 : the first string.
+ * @param	char	*s2 : the string to join to s1.
+ */
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		sizetotal;
@@ -113,6 +99,15 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (res);
 }
 
+/**
+ * @brief	Searchs in given string for the first aparition
+ * 			of searched_char.
+ * @return	Pointer of string from first aparition of seached_char
+ * 			in string given.
+ * 			NULL if any error or not found.
+ * @param	char	*string : where we will search.
+ * @param	int		searched_char : the char we are searching for.
+ */
 char	*ft_strchr(const char *string, int searchedChar )
 {
 	char	*str;
