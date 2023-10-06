@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yemoreno <yemoreno@student.42malaga.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/26 11:51:20 by yemoreno          #+#    #+#             */
-/*   Updated: 2023/09/26 11:51:20 by yemoreno         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "get_next_line.h"
 
@@ -95,7 +84,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	while (s2 && s2[j])
 		res[i++] = s2[j++];
-	res[sizetotal] = 0;
+	res[i] = 0;
 	return (res);
 }
 

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yemoreno <yemoreno@student.42malaga.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/26 11:50:57 by yemoreno          #+#    #+#             */
-/*   Updated: 2023/09/26 11:50:57 by yemoreno         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "get_next_line.h"
 
@@ -22,13 +11,14 @@
 */
 char	*read_file(int fd, char *res);
 /**
- * @brief	Creates a string of the old buffer and the
+ * @brief	Closes the append string on read_count position.
+ * 			Creates a string of the old buffer and the
  * 			string to append, and clears the old buffer.
  * @return	New String resulting of joining old_buffer and append
  * @param	char	*old_buffer : the starting string.
  * @param	char	*append : the string to join.
  */
-char	*ft_free(char *old_buffer, char *append);
+char	*ft_free(char *old_buffer, char *append, int read_count);
 /**
  * @brief	Deletes the n charachters in string until 
  * 			it reaches new line or end of string.
@@ -56,7 +46,8 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = read_file(fd, buffer);
+	if (!buffer)
+		buffer = read_file(fd, buffer);
 	if (!buffer)
 		return (NULL);
 	line = ft_line(buffer);
@@ -75,7 +66,7 @@ char	*read_file(int fd, char *buffer)
 	if (!tmp)
 		return (NULL);
 	read_count = 1;
-	while (read_count > 0 && ft_strchr(buffer, '\n') == NULL)
+	while (read_count > 0 && !ft_strchr(buffer, '\n'))
 	{
 		read_count = read(fd, tmp, BUFFER_SIZE);
 		if (read_count == -1)
@@ -85,10 +76,9 @@ char	*read_file(int fd, char *buffer)
 				free(buffer);
 			return (NULL);
 		}
-		if (!tmp)
+		buffer = ft_free(buffer, tmp, read_count);
+		if (!buffer)
 			break ;
-		tmp[read_count] = '\0';
-		buffer = ft_free(buffer, tmp);
 	}
 	free(tmp);
 	return (buffer);
@@ -111,10 +101,11 @@ char	*ft_line(char *buffer)
 	return (tmp);
 }
 
-char	*ft_free(char *old_buffer, char *append)
+char	*ft_free(char *old_buffer, char *append, int read_count)
 {
 	char	*temp;
 
+	append[read_count] = '\0';
 	if (!old_buffer && !append)
 		return (NULL);
 	temp = ft_strjoin(old_buffer, append);
