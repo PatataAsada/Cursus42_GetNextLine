@@ -6,7 +6,7 @@
 /*   By: yemoreno <yemoreno@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:50:57 by yemoreno          #+#    #+#             */
-/*   Updated: 2023/10/07 14:39:27 by yemoreno         ###   ########.fr       */
+/*   Updated: 2023/10/07 19:51:30 by yemoreno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*read_file(int fd, char *buffer)
 	tmp = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!tmp)
 		return (NULL);
+	tmp[BUFFER_SIZE] = 0;
 	read_count = 1;
 	while (read_count > 0 && ft_strchr(buffer, '\n') == NULL)
 	{
@@ -66,7 +67,8 @@ char	*read_file(int fd, char *buffer)
 				free(buffer);
 			return (NULL);
 		}
-		tmp[read_count] = '\0';
+		while (read_count < (BUFFER_SIZE) && tmp[read_count])
+			tmp[read_count++] = 0;
 		buffer = ft_free(buffer, tmp);
 	}
 	free(tmp);
@@ -91,7 +93,7 @@ char	*ft_line(char *buffer)
 			break ;
 	tmp = ft_substr(buffer, 0, i);
 	if (!tmp)
-		free(tmp);
+		return (NULL);
 	return (tmp);
 }
 

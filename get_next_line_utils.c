@@ -6,7 +6,7 @@
 /*   By: yemoreno <yemoreno@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:51:20 by yemoreno          #+#    #+#             */
-/*   Updated: 2023/10/07 14:08:47 by yemoreno         ###   ########.fr       */
+/*   Updated: 2023/10/07 19:49:13 by yemoreno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 size_t	ft_strlen(const char *str)
 {
-	int	length;
+	size_t	length;
 
 	if (!str)
 		return (0);
@@ -36,26 +36,26 @@ size_t	ft_strlen(const char *str)
  * @return	A substring of the given string with the parameters given.
  * 			NULL if any error.
  * @param	char	*s : The original string to work.
- * @param	int		start : The position where to start the substring.
+ * @param	size_t	start : The position where to start the substring.
  * @param	size_t	len : The desired length of the substring.
  */
-char	*ft_substr(const char *s, unsigned int start, size_t len)
+char	*ft_substr(const char *s, size_t start, size_t len)
 {
-	char		*temp;
-	int			i;
+	char	*temp;
+	size_t	i;
+	size_t	total;
 
 	i = 0;
-	if (!s || ft_strlen(s) < start || len <= 0 || start < 0)
+	total = ft_strlen(s) - start;
+	if (!s || total <= 0 || len <= 0 || start < 0)
 		return (NULL);
-	if (len >= ft_strlen(s) - start)
-	{
-		temp = malloc((ft_strlen(s) + 1 - start) * sizeof(char));
-	}
+	if (total < len)
+		temp = malloc((total + 1) * sizeof(char));
 	else
-		temp = malloc((len + 1) * sizeof(char));
+		temp = malloc(((int)len + 1) * sizeof(char));
 	if (!temp)
 		return (NULL);
-	while (len-- > 0 && s[start + i] != '\0')
+	while (s[start + i] && len-- > 0)
 	{
 		temp[i] = s[start + i];
 		i++;
@@ -73,10 +73,10 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
  */
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		sizetotal;
+	size_t	sizetotal;
 	char	*res;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;

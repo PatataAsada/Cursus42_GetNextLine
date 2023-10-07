@@ -6,7 +6,7 @@
 /*   By: yemoreno <yemoreno@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:51:44 by yemoreno          #+#    #+#             */
-/*   Updated: 2023/10/07 13:36:54 by yemoreno         ###   ########.fr       */
+/*   Updated: 2023/10/07 19:49:04 by yemoreno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <stddef.h>
-# include <mm_malloc.h>
+# include <stdlib.h>
 # include <limits.h>
 # include <unistd.h>
 
@@ -25,9 +25,9 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
+char	*ft_substr(const char *s, size_t start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strchr(const char *string, int searchedChar );
+char	*ft_strchr(const char *string, int searchedChar);
 
 size_t	ft_strlen(const char *str);
 
