@@ -6,42 +6,15 @@
 /*   By: yemoreno <yemoreno@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:50:57 by yemoreno          #+#    #+#             */
-/*   Updated: 2023/09/26 11:50:57 by yemoreno         ###   ########.fr       */
+/*   Updated: 2023/10/07 14:39:27 by yemoreno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/**
- * @brief	Reads BUFFER_SIZE bytes of file
- * 			until it reaches a new line.
- * @return	Buffer with the bytes read from file.
- * 			NULL if EOF or Error.
- * @param	int	fd : file descriptor.
- * @param	char	*res: buffer to
-*/
 char	*read_file(int fd, char *res);
-/**
- * @brief	Creates a string of the old buffer and the
- * 			string to append, and clears the old buffer.
- * @return	New String resulting of joining old_buffer and append
- * @param	char	*old_buffer : the starting string.
- * @param	char	*append : the string to join.
- */
 char	*ft_free(char *old_buffer, char *append);
-/**
- * @brief	Deletes the n charachters in string until 
- * 			it reaches new line or end of string.
- * @return	New String with N chars removed.
- * 			NULL if it can't find new line.
- * @param	char	*old_buffer : the buffer to modify.
- */
 char	*ft_next(char *old_buffer);
-/**
-* @brief	Gives the first line in given buffer.
-* @return	The first String from Buffer.
-* @param	char	*buffer : A String that may contain new lines.
-*/
 char	*ft_line(char *buffer);
 
 /**
@@ -66,6 +39,14 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
+/**
+ * @brief	Reads BUFFER_SIZE bytes of file
+ * 			until it reaches a new line.
+ * @return	Buffer with the bytes read from file.
+ * 			NULL if EOF or Error.
+ * @param	int	fd : file descriptor.
+ * @param	char	*res: buffer to
+*/
 char	*read_file(int fd, char *buffer)
 {
 	int		read_count;
@@ -85,8 +66,6 @@ char	*read_file(int fd, char *buffer)
 				free(buffer);
 			return (NULL);
 		}
-		if (!tmp)
-			break ;
 		tmp[read_count] = '\0';
 		buffer = ft_free(buffer, tmp);
 	}
@@ -94,6 +73,11 @@ char	*read_file(int fd, char *buffer)
 	return (buffer);
 }
 
+/**
+* @brief	Gives the first line in given buffer.
+* @return	The first String from Buffer.
+* @param	char	*buffer : A String that may contain new lines.
+*/
 char	*ft_line(char *buffer)
 {
 	long	i;
@@ -111,6 +95,13 @@ char	*ft_line(char *buffer)
 	return (tmp);
 }
 
+/**
+ * @brief	Creates a string of the old buffer and the
+ * 			string to append, and clears the old buffer.
+ * @return	New String resulting of joining old_buffer and append
+ * @param	char	*old_buffer : the starting string.
+ * @param	char	*append : the string to join.
+ */
 char	*ft_free(char *old_buffer, char *append)
 {
 	char	*temp;
@@ -124,6 +115,13 @@ char	*ft_free(char *old_buffer, char *append)
 	return (temp);
 }
 
+/**
+ * @brief	Deletes the n charachters in string until 
+ * 			it reaches new line or end of string.
+ * @return	New String with N chars removed.
+ * 			NULL if it can't find new line.
+ * @param	char	*old_buffer : the buffer to modify.
+ */
 char	*ft_next(char *old_buffer)
 {
 	char	*tmp;

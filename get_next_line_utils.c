@@ -6,7 +6,7 @@
 /*   By: yemoreno <yemoreno@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:51:20 by yemoreno          #+#    #+#             */
-/*   Updated: 2023/09/26 11:51:20 by yemoreno         ###   ########.fr       */
+/*   Updated: 2023/10/07 14:08:47 by yemoreno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief	The length of given string.
  * @return	The length of the string.
- * 			NULL if error.
+ * 			NULL if nothing given.
  * @param	char	*str : the string to measure.
  */
 size_t	ft_strlen(const char *str)
@@ -41,33 +41,31 @@ size_t	ft_strlen(const char *str)
  */
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
-	char		*tmp;
+	char		*temp;
 	int			i;
 
 	i = 0;
-	if (!s)
+	if (!s || ft_strlen(s) < start || len <= 0 || start < 0)
 		return (NULL);
-	if (start >= ft_strlen(s) || len == 0)
+	if (len >= ft_strlen(s) - start)
 	{
-		tmp = malloc(1 * sizeof(char));
+		temp = malloc((ft_strlen(s) + 1 - start) * sizeof(char));
 	}
-	else if (len >= ft_strlen(s) - start)
-		tmp = malloc((ft_strlen(s) + 1 - start) * sizeof(char));
 	else
-		tmp = malloc((len + 1) * sizeof(char));
-	if (!tmp)
+		temp = malloc((len + 1) * sizeof(char));
+	if (!temp)
 		return (NULL);
 	while (len-- > 0 && s[start + i] != '\0')
 	{
-		tmp[i] = s[start + i];
+		temp[i] = s[start + i];
 		i++;
 	}
-	tmp[i] = '\0';
-	return (tmp);
+	temp[i] = '\0';
+	return (temp);
 }
 
 /**
- * @brief	Appends two strings together.
+ * @brief	Join two strings into one.
  * @return	String resulted from joining the 2 given strings.
  * 			NULL if error.
  * @param	char	*s1 : the first string.
